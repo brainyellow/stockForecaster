@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block body %}
+<h1 class='jumbotron text-center'>
+	KNN
+</h1>
+<body>
+	<form method="POST" align='center'>
+		<div class="input-group col-5 mx-auto">
+  			<div class="input-group-prepend">
+    			<span class="input-group-text" id="">Stock Ticker</span>
+  			</div>
+  			<input class="form-control" type="text" value='' id="ticker" style='text-align:center'>
+  		</div>
+		<span style="display:block; height: 10px;"></span>
+		<div class="input-group col-5 mx-auto">
+  			<div class="input-group-prepend">
+    			<span class="input-group-text" id="">Start Date</span>
+  			</div>
+  			<input class="form-control" type="date" value='' id="fromDate">
+  		</div>
+  		<span style="display:block; height:10px;"></span>
+  		<div class="input-group col-5 mx-auto">
+  			<div class="input-group-prepend">
+    			<span class="input-group-text" id="">End Date</span>
+  			</div>
+  			<input class="form-control" type="date" value='' id="toDate">
+		</div>
+		<button class= 'btn btn-outline-dark' style='margin-top:15px' align='center'>Run KNN</button>
+	</form>
+</body>
+{% endblock %}

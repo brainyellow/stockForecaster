@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block body %}
+<span style='display:block; height:15px'></span>
+<form method="POST" align='center' action='/stock'>
+	<div class="input-group col-5 mx-auto">
+		<div class="input-group-prepend">
+			<span class="input-group-text" id="">Stock Ticker</span>
+		</div>
+		<input class="form-control" type="text" name="searchStock" style='text-align:center'>
+	</div>
+</form>
+<h1>{{ ticker }}</h1>
+<div>{{ df | safe }}</div>
+{% endblock %}
