@@ -1,31 +1,89 @@
 {% extends 'layout.html' %}
 {% block body %}
 <h1 class='jumbotron text-center'>
-	KNN
+	ツ
 </h1>
 <body>
-	<form method="POST" align='center'>
-		<div class="input-group col-5 mx-auto">
-  			<div class="input-group-prepend">
-    			<span class="input-group-text" id="">Stock Ticker</span>
-  			</div>
-  			<input class="form-control" type="text" value='' id="ticker" style='text-align:center'>
-  		</div>
+	<form method="POST" action='/model' align='center'>
+		<div class="input-group col-4 mx-auto">
+			<div class="input-group-prepend">
+  			<span class="input-group-text" id="">Stock</span>
+			</div>
+			<input class="form-control" type="text" name="ticker" style='text-align:center' required autocomplete="off" placeholder="AAPL">
+  	</div>
+
 		<span style="display:block; height: 10px;"></span>
-		<div class="input-group col-5 mx-auto">
-  			<div class="input-group-prepend">
-    			<span class="input-group-text" id="">Start Date</span>
-  			</div>
-  			<input class="form-control" type="date" value='' id="fromDate">
-  		</div>
-  		<span style="display:block; height:10px;"></span>
-  		<div class="input-group col-5 mx-auto">
-  			<div class="input-group-prepend">
-    			<span class="input-group-text" id="">End Date</span>
-  			</div>
-  			<input class="form-control" type="date" value='' id="toDate">
+		<div class="input-group col-4 mx-auto">
+  		<div class="input-group-prepend">
+  			<span class="input-group-text" id="">Start</span>
+			</div>
+			<input class="form-control" type="date" name="fromDate" style='text-align:center' required>
 		</div>
-		<button class= 'btn btn-outline-dark' style='margin-top:15px' align='center'>Run KNN</button>
-	</form>
+
+  	<span style="display:block; height:10px;"></span>
+  	<div class="input-group col-4 mx-auto">
+			<div class="input-group-prepend">
+  			<span class="input-group-text" id="">End</span>
+			</div>
+			<input class="form-control" type="date" name="toDate" style='text-align:center' required>
+    </div>
+
+    <span style='display:block; height:10px;'></span>
+    <div class="input-group col-4 mx-auto">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="">Indicators</span>
+      </div>
+      <input class="form-control" type="text" name="indicators" style='text-align:center' required autocomplete="off" placeholder="RSI_14,MACD,ADX ...">
+    </div>
+
+    <span style='display:block; height:15px;'></span>
+    <select name= 'model' class="custom-select col-3" required>
+      <option selected disabled value=''>Select Model</option>
+      <option value="knn">K-Nearest Neighbors</option>
+      <option value="placeholder">Another model</option>
+      <option value="placeholder">Some other model</option>
+    </select>
+
+    <span style='display:block; height:10px;'></span>
+    <div class="form-check form-check-inline">
+      Time Interval: <span style='display:block; width: 15px;'></span>
+      <input class="form-check-input" type="radio" name='interval' id="inlineCheckbox1" value="daily" required>
+      <label class="form-check-label lead" for="inlineCheckbox1">Daily</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name='interval' id="inlineCheckbox2" value="minute">
+      <label class="form-check-label lead" for="inlineCheckbox2">Minute</label>
+    </div>
+    <br>
+    <button class= 'btn btn-outline-dark' style='margin-top:15px' align='center'>Run</button>
+  </form>
 </body>
+<div class='lead' align='center' style='margin-top:15px'>
+  Refer to the stockstats <a href='https://github.com/jealous/stockstats/blob/master/README.rst'>documentation</a> for technical indicator queries
+</div>
+<br>
+<div align='center' class = 'jumbotron lead' id='results' style='display:none'>
+<h2>Results: <br></h2>
+<h3>{{ ticker }}</h3>
+<div>{{ neighbors }}</div>
+<div>{{ results }}</div>
+<div>{{ valresults }}</div>
+<div>{{ accScore }}</div>
+<div>{{ precScore }}</div>
+<div>{{ confMatrix }}</div>
+<br>
+</div>
+<script>
+  function showHide() {
+    var div = document.getElementByID('results');
+    if (div.style.display == 'none')
+    {
+      div.style.display = '';
+    }
+    else
+    {
+      div.style.display = 'none'
+    }
+  }
+</script>
 {% endblock %}

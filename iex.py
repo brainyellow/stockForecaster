@@ -30,7 +30,7 @@ def stockDailyData(stock, fromDate, toDate):
     URL = r.request('GET', 'https://api.iextrading.com/1.0/stock/' + stock + '/chart/5y').json()
     df = pd.DataFrame(URL)
     df.set_index(pd.DatetimeIndex(df['date']), inplace=True)
-    df = df[date.datetime.strptime(fromDate, '%Y%m%d'):]
+    df = df[date.datetime.strptime(fromDate, '%Y%m%d'):date.datetime.strptime(toDate, '%Y%m%d')]
     return df
 
 def incDate(convDate):
