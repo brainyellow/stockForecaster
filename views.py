@@ -42,9 +42,15 @@ def model():
 				precScore='Precision Score: {}'.format(precScore), 
 				confMatrix='Confusion Matrix: {}'.format(confMatrix))
 
-		# elif interval == 'minute':
-		# 	df = ml.convertToStockStatsDF(iex.stockMinuteData(ticker, fromDate, toDate))
-			# return render_template('model.html')
+		elif interval == 'minute':
+			features, close = ml.minuteRoutine(ticker, fromDate, toDate, indicators)
+			valresults, results, neighbors, accScore, precScore, confMatrix = ml.runModel(features, close)
+			return render_template('model.html', valresults='Validation Score: {}'.format(valresults), 
+				results='Score: {}'.format(results), ticker=ticker, 
+				neighbors='Optimal Neighbors: {}'.format(neighbors), 
+				accScore='Accuracy Score: {}'.format(accScore),
+				precScore='Precision Score: {}'.format(precScore), 
+				confMatrix='Confusion Matrix: {}'.format(confMatrix))
 	else:
 		return render_template('model.html')
 

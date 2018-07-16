@@ -62,7 +62,7 @@
   Refer to the stockstats <a href='https://github.com/jealous/stockstats/blob/master/README.rst'>documentation</a> for technical indicator queries
 </div>
 <br>
-<div align='center' class = 'jumbotron lead' id='results' style='display:none'>
+<div align='center' class = 'jumbotron lead' id='results' style='display:'>
 <h2>Results: <br></h2>
 <h3>{{ ticker }}</h3>
 <div>{{ neighbors }}</div>
@@ -73,17 +73,5 @@
 <div>{{ confMatrix }}</div>
 <br>
 </div>
-<script>
-  function showHide() {
-    var div = document.getElementByID('results');
-    if (div.style.display == 'none')
-    {
-      div.style.display = '';
-    }
-    else
-    {
-      div.style.display = 'none'
-    }
-  }
-</script>
+
 {% endblock %}

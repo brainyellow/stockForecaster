@@ -119,10 +119,10 @@ def runModel(features, close):
 def dailyRoutine(ticker, fromDate, toDate, indicators):
     df = convertToStockStatsDF(iex.stockDailyData(ticker, fromDate, toDate))
     close = closeLabel(df)
-    merged = secondary(df, indicators) # need to fix this method...
-    # rsi=getTechIndFeature(df, 'rsi_14')
-    # macd=getTechIndFeature(df, 'macd')
-    # merged = rsi.merge(macd, left_index=True, right_index=True)
+    # merged = secondary(df, indicators) # need to fix this method...
+    rsi=getTechIndFeature(df, 'rsi_14')
+    macd=getTechIndFeature(df, 'macd')
+    merged = rsi.merge(macd, left_index=True, right_index=True)
     # this merge doesnt work for some reason when using the merged from the techIndicators function
     merged = merged.merge(close, left_index=True, right_index=True)
     merged = merged.dropna()
@@ -130,8 +130,24 @@ def dailyRoutine(ticker, fromDate, toDate, indicators):
     close = merged['close']
     features = merged.drop(columns='close')
     features = features.replace(np.inf, np.nan).dropna()
-
     return features, close
+
+def minuteRoutine(ticker, fromDate, toDate, indicators):
+    df = convertToStockStatsDF(iex.stockMinData(ticker, fromDate, toDate))
+    close = closeLabel(df)
+    # merged = secondary(df, indicators) # need to fix this method...
+    rsi=getTechIndFeature(df, 'rsi_14')
+    macd=getTechIndFeature(df, 'macd')
+    merged = rsi.merge(macd, left_index=True, right_index=True)
+    # this merge doesnt work for some reason when using the merged from the techIndicators function
+    merged = merged.merge(close, left_index=True, right_index=True)
+    merged = merged.dropna()
+
+    close = merged['close']
+    features = merged.drop(columns='close')
+    features = features.replace(np.inf, np.nan).dropna()
+    return features, close
+
 #secondary techIndicators w/o try catch
 def secondary(stockDF, indicators):
     df = stockDF
@@ -146,6 +162,6 @@ def secondary(stockDF, indicators):
             merged = merged.merge(featureList[j], left_index=True, right_index=True)
     return merged
 
-features, close = dailyRoutine('amd', '20160101', '20180101', 'macd,rsi_14,adx')
+# features, close = minuteRoutine('amd', '20180401', '20180601', 'macd,rsi_14,adx')
 
-valresults, results, neighbors, accScore, precScore, confMatrix = runModel(features, close)
+# valresults, results, neighbors, accScore, precScore, confMatrix = runModel(features, close)
