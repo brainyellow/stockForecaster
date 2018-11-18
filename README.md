@@ -1,2 +1,2 @@
 # stockForecaster
-Tries to predict stock forecasts using various ML models
+Attempts to forecast stock price movement using various ML models
